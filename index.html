@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4ef">
+  <meta name="description" content="Descubra fragrâncias especiais para cada momento. Encontre seu próximo perfume favorito na Essência Atelier.">
+  <title>Essência Atelier — Perfumes para sentir</title>
+  <style>
+    :root {
+      --ink: #28231f;
+      --muted: #82796f;
+      --cream: #f7f4ef;
+      --paper: #fffefa;
+      --line: #e8e1d8;
+      --wine: #733f49;
+      --wine-dark: #58313a;
+      --gold: #b38a53;
+      --blush: #f2e5e1;
+      --green: #526956;
+      --shadow: 0 14px 40px rgba(46, 35, 29, .08);
+      font-family: "Avenir Next", Avenir, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--cream); }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    .announcement { padding: 9px 15px; background: var(--wine-dark); color: #fff9f2; text-align: center; font-size: 10px; letter-spacing: .8px; }
+    .announcement strong { color: #ebcfa7; }
+    .site-header { position: sticky; top: 0; z-index: 5; border-bottom: 1px solid rgba(232,225,216,.85); background: rgba(255,254,250,.95); backdrop-filter: blur(15px); }
+    .header-inner { max-width: 1220px; min-height: 77px; margin: auto; padding: 0 30px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 25px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; width: fit-content; }
+    .brand-mark { width: 33px; height: 33px; display: grid; place-items: center; border: 1px solid #c5aa84; border-radius: 50%; color: var(--wine); font-family: Georgia, serif; font-size: 17px; }
+    .brand-name { font-family: Georgia, "Times New Roman", serif; font-size: 16px; letter-spacing: .7px; }
+    .brand-name small { display: block; margin-top: 2px; color: var(--gold); font-family: inherit; font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; }
+    .main-nav { display: flex; align-items: center; gap: 27px; }
+    .main-nav a { color: #665d55; font-size: 11px; transition: color .2s; }
+    .main-nav a:hover { color: var(--wine); }
+    .header-actions { display: flex; justify-content: flex-end; align-items: center; gap: 9px; }
+    .search-wrap { position: relative; }
+    .search-input { width: 174px; height: 37px; padding: 0 12px 0 34px; border: 1px solid var(--line); border-radius: 30px; outline: 0; background: #fff; color: var(--ink); font-size: 10px; }
+    .search-input:focus { border-color: #bc9b86; }
+    .search-icon { position: absolute; left: 12px; top: 10px; color: var(--muted); font-size: 13px; pointer-events: none; }
+    .cart-button { position: relative; width: 39px; height: 39px; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--ink); font-size: 15px; }
+    .cart-count { position: absolute; top: -3px; right: -3px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 20px; background: var(--wine); color: white; font-size: 9px; line-height: 17px; text-align: center; }
+    .hero { min-height: 440px; padding: 66px 30px; display: grid; place-items: center; overflow: hidden; position: relative; background: #e8ded4; }
+    .hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
+    .hero::before { width: 480px; height: 480px; right: 9%; top: -96px; border: 1px solid rgba(115,63,73,.2); }
+    .hero::after { width: 360px; height: 360px; right: calc(9% + 60px); top: -35px; border: 1px solid rgba(115,63,73,.16); }
+    .hero-inner { width: min(1220px,100%); position: relative; z-index: 1; }
+    .hero-copy { max-width: 490px; }
+    .eyebrow { color: var(--wine); font-size: 10px; font-weight: 700; letter-spacing: 2.3px; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    .hero h1 { margin: 14px 0 16px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(43px, 6.5vw, 76px); font-weight: 400; letter-spacing: -2.8px; line-height: .98; }
+    .hero h1 em { color: var(--wine); font-weight: 400; }
+    .hero-copy > p { max-width: 365px; margin: 0 0 25px; color: #675c52; font-size: 13px; line-height: 1.8; }
+    .button-main, .button-outline { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 43px; padding: 0 19px; border: 1px solid var(--wine); border-radius: 3px; background: var(--wine); color: #fffaf5; font-size: 10px; font-weight: 700; letter-spacing: .5px; transition: background .2s, color .2s, transform .2s; }
+    .button-main:hover { background: var(--wine-dark); transform: translateY(-1px); }
+    .button-outline { background: transparent; color: var(--wine); }
+    .button-outline:hover { background: var(--wine); color: white; }
+    .hero-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 23px; color: #796c5e; font-size: 9px; }
+    .hero-note span { color: var(--gold); font-size: 13px; }
+    .hero-bottle { position: absolute; top: 50%; right: 15%; transform: translateY(-46%) rotate(4deg); filter: drop-shadow(0 30px 22px rgba(69,46,37,.22)); }
+    .bottle { width: 145px; height: 200px; position: relative; border: 1px solid rgba(255,255,255,.75); border-radius: 25px 25px 37px 37px; background: linear-gradient(100deg, rgba(255,255,255,.72), rgba(255,255,255,.2) 30%, rgba(117,68,58,.1) 31%, rgba(255,255,255,.42) 74%, rgba(255,255,255,.8)), linear-gradient(0deg,#b77c60 0%,#d9af8d 60%,#ead4b8 100%); box-shadow: inset 9px 0 15px rgba(255,255,255,.42), inset -8px -4px 13px rgba(97,61,46,.14); }
+    .bottle::before { content: ""; position: absolute; width: 50px; height: 24px; left: calc(50% - 25px); top: -21px; border-radius: 5px 5px 1px 1px; background: linear-gradient(90deg,#7b634a,#d1b38a 35%,#f2dfbd 55%,#987c5d); }
+    .bottle::after { content: ""; position: absolute; width: 26px; height: 26px; left: calc(50% - 13px); top: -43px; border-radius: 4px 4px 1px 1px; background: linear-gradient(90deg,#806546,#ddc39e,#9b7956); }
+    .bottle-label { position: absolute; left: 19px; right: 19px; top: 78px; padding: 11px 4px 9px; border: 1px solid rgba(135,93,65,.4); color: #795342; text-align: center; font-family: Georgia,serif; font-size: 11px; letter-spacing: 1px; }
+    .bottle-label small { display: block; margin-top: 4px; font-family: var(--font); font-family: sans-serif; font-size: 6px; letter-spacing: 1.8px; }
+    .hero-bottle .bottle { width: 175px; height: 240px; }
+    .hero-bottle .bottle-label { top: 92px; left: 23px; right: 23px; }
+    .benefits { background: var(--paper); border-bottom: 1px solid var(--line); }
+    .benefits-inner { max-width: 1220px; margin: auto; padding: 19px 30px; display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+    .benefit { display: flex; align-items: center; justify-content: center; gap: 10px; color: #6a6259; font-size: 10px; }
+    .benefit-icon { color: var(--gold); font-size: 16px; }
+    .section { max-width: 1220px; margin: auto; padding: 73px 30px; }
+    .section-heading { margin-bottom: 26px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+    .section-heading h2 { margin: 7px 0 0; font-family: Georgia,"Times New Roman",serif; font-size: 34px; font-weight: 400; letter-spacing: -.7px; }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 11px; }
+    .category-list { margin-bottom: 25px; display: flex; gap: 8px; overflow-x: auto; padding: 0 0 5px; scrollbar-width: thin; }
+    .category-button { flex: 0 0 auto; padding: 9px 15px; border: 1px solid #ddd3c8; border-radius: 30px; background: transparent; color: #665d55; font-size: 10px; transition: .2s; }
+    .category-button:hover, .category-button.active { border-color: var(--wine); background: var(--wine); color: #fff; }
+    .product-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 17px; }
+    .product-card { min-width: 0; position: relative; overflow: hidden; border: 1px solid #eee8e0; background: var(--paper); transition: transform .25s, box-shadow .25s; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .product-art { height: 220px; display: grid; place-items: center; position: relative; overflow: hidden; background: var(--art-bg,#eee4dc); }
+    .product-art::before { content: ""; position: absolute; width: 190px; height: 190px; border: 1px solid rgba(255,255,255,.55); border-radius: 50%; }
+    .product-art::after { content: ""; position: absolute; width: 142px; height: 142px; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; }
+    .product-art .bottle { z-index: 1; transform: scale(.76); }
+    .product-card:nth-child(4n+2) .bottle { filter: hue-rotate(48deg) saturate(.75); }
+    .product-card:nth-child(4n+3) .bottle { filter: hue-rotate(150deg) saturate(.8); }
+    .product-card:nth-child(4n) .bottle { filter: hue-rotate(300deg) saturate(.75); }
+    .product-tag { position: absolute; z-index: 2; top: 12px; left: 12px; padding: 6px 8px; background: rgba(255,254,250,.9); color: var(--wine); font-size: 8px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+    .favorite { position: absolute; z-index: 2; top: 9px; right: 11px; width: 30px; height: 30px; border: 0; border-radius: 50%; background: rgba(255,254,250,.85); color: #76685f; font-size: 16px; }
+    .favorite.active { color: var(--wine); }
+    .product-info { padding: 15px 14px 14px; }
+    .product-category { color: var(--gold); font-size: 8px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+    .product-name { margin: 6px 0 5px; font-family: Georgia,"Times New Roman",serif; font-size: 17px; font-weight: 400; }
+    .product-desc { min-height: 30px; margin: 0; color: var(--muted); font-size: 9px; line-height: 1.55; }
+    .product-bottom { margin-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .product-price { font-size: 13px; font-weight: 750; }
+    .product-size { display: block; margin-top: 2px; color: #968c81; font-size: 8px; font-weight: 400; }
+    .add-button { min-height: 33px; padding: 0 10px; border: 1px solid var(--wine); background: transparent; color: var(--wine); font-size: 9px; font-weight: 700; transition: .2s; }
+    .add-button:hover { background: var(--wine); color: #fff; }
+    .no-results { grid-column: 1/-1; padding: 48px 10px; color: var(--muted); text-align: center; font-size: 12px; }
+    .story { background: #e9e1d8; }
+    .story-inner { max-width: 1220px; min-height: 310px; margin: auto; padding: 55px 30px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 50px; }
+    .story-art { min-height: 225px; position: relative; display: grid; place-items: center; overflow: hidden; background: linear-gradient(135deg,#d6c5b5,#f2eae1); }
+    .story-art::before, .story-art::after { content: ""; position: absolute; border: 1px solid rgba(115,63,73,.24); border-radius: 50%; }
+    .story-art::before { width: 245px; height: 245px; }
+    .story-art::after { width: 195px; height: 195px; }
+    .story-art .bottle { z-index: 1; transform: scale(.72) rotate(-7deg); }
+    .story-copy h2 { margin: 9px 0 12px; font-family: Georgia,serif; font-size: 35px; font-weight: 400; line-height: 1.1; }
+    .story-copy p { max-width: 425px; color: #6e6259; font-size: 11px; line-height: 1.8; }
+    .story-copy .button-outline { margin-top: 5px; }
+    .newsletter { max-width: 1220px; margin: auto; padding: 62px 30px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .newsletter h2 { margin: 7px 0 5px; font-family: Georgia,serif; font-size: 27px; font-weight: 400; }
+    .newsletter p { margin: 0; color: var(--muted); font-size: 10px; }
+    .newsletter-form { display: flex; width: min(390px,100%); gap: 7px; }
+    .newsletter-form input { min-width: 0; flex: 1; height: 41px; padding: 0 13px; border: 1px solid var(--line); background: #fffefa; outline: 0; font-size: 10px; }
+    .newsletter-form button { padding: 0 15px; border: 0; background: var(--wine); color: white; font-size: 9px; font-weight: 700; }
+    footer { background: #322b27; color: #f8f2eb; }
+    .footer-inner { max-width: 1220px; margin: auto; padding: 36px 30px 24px; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; }
+    footer .brand-mark { border-color: #aa8a67; color: #e6c596; }
+    footer .brand-name small { color: #c7a579; }
+    .footer-note { max-width: 290px; margin: 13px 0 0; color: #c9bfb5; font-size: 9px; line-height: 1.7; }
+    .footer-col h3 { margin: 2px 0 12px; color: #d6bb98; font-size: 9px; letter-spacing: 1.3px; text-transform: uppercase; }
+    .footer-col a, .footer-col p { display: block; margin: 8px 0; color: #d8d0c8; font-size: 9px; }
+    .footer-bottom { max-width: 1220px; margin: auto; padding: 14px 30px 18px; border-top: 1px solid rgba(255,255,255,.12); color: #aaa198; font-size: 8px; }
+    .overlay { position: fixed; inset: 0; z-index: 8; background: rgba(35,27,24,.42); opacity: 0; pointer-events: none; transition: opacity .25s; }
+    .overlay.open { opacity: 1; pointer-events: auto; }
+    .cart-drawer { position: fixed; z-index: 9; top: 0; right: 0; width: min(410px,100%); height: 100dvh; padding: 22px; display: flex; flex-direction: column; background: var(--paper); transform: translateX(102%); transition: transform .28s ease; }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-head { padding-bottom: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+    .cart-head h2 { margin: 0; font-family: Georgia,serif; font-size: 22px; font-weight: 400; }
+    .close-button { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--ink); font-size: 18px; }
+    .cart-items { flex: 1; padding: 10px 0; overflow: auto; }
+    .cart-empty { padding: 50px 10px; color: var(--muted); text-align: center; font-size: 11px; line-height: 1.7; }
+    .cart-item { padding: 13px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 54px 1fr auto; align-items: center; gap: 11px; }
+    .cart-art { width: 54px; height: 60px; display: grid; place-items: center; background: #eee4dc; }
+    .cart-art .bottle { transform: scale(.24); }
+    .cart-item-name { margin: 0 0 4px; font-family: Georgia,serif; font-size: 13px; }
+    .cart-item-price { color: var(--muted); font-size: 9px; }
+    .quantity-control { margin-top: 8px; display: inline-flex; align-items: center; gap: 9px; }
+    .quantity-control button { width: 22px; height: 22px; border: 1px solid var(--line); background: white; color: var(--ink); }
+    .quantity-control span { font-size: 10px; }
+    .remove-item { border: 0; background: transparent; color: #a49487; font-size: 16px; }
+    .cart-foot { padding-top: 15px; border-top: 1px solid var(--line); }
+    .cart-total { margin-bottom: 15px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 750; }
+    .cart-foot .button-main { width: 100%; }
+    .cart-hint { margin: 9px 0 0; color: var(--muted); font-size: 8px; line-height: 1.5; text-align: center; }
+    dialog { width: min(420px,calc(100% - 28px)); padding: 0; border: 0; background: var(--paper); box-shadow: 0 24px 90px rgba(20,15,13,.23); }
+    dialog::backdrop { background: rgba(35,27,24,.45); backdrop-filter: blur(2px); }
+    .checkout-inner { padding: 24px; }
+    .checkout-head { margin-bottom: 20px; display: flex; align-items: flex-start; justify-content: space-between; }
+    .checkout-head h2 { margin: 0; font-family: Georgia,serif; font-size: 23px; font-weight: 400; }
+    .checkout-head p { margin: 5px 0 0; color: var(--muted); font-size: 9px; }
+    .field { margin-bottom: 13px; display: flex; flex-direction: column; gap: 6px; }
+    .field label { color: #665d55; font-size: 9px; font-weight: 700; }
+    .field input, .field textarea, .field select { width: 100%; min-height: 38px; padding: 9px 10px; border: 1px solid var(--line); background: white; color: var(--ink); font-size: 10px; outline: 0; }
+    .field textarea { min-height: 65px; resize: vertical; }
+    .checkout-total { margin: 15px 0; padding-top: 12px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 11px; font-weight: 750; }
+    .checkout-submit { width: 100%; }
+    .toast { position: fixed; right: 18px; bottom: 18px; z-index: 12; max-width: min(340px,calc(100% - 36px)); padding: 12px 15px; background: #342d28; color: white; box-shadow: var(--shadow); font-size: 10px; line-height: 1.6; opacity: 0; transform: translateY(8px); pointer-events: none; transition: .2s; }
+    .toast.visible { opacity: 1; transform: translateY(0); }
+    @media(max-width:900px) {
+      .header-inner { padding: 0 20px; gap: 13px; }
+      .main-nav { gap: 14px; }
+      .search-input { width: 140px; }
+      .section, .story-inner, .newsletter { padding-left: 20px; padding-right: 20px; }
+      .product-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+      .hero-bottle { right: 10%; }
+    }
+    @media(max-width:650px) {
+      .announcement { font-size: 8px; }
+      .header-inner { min-height: 64px; padding: 0 14px; grid-template-columns: 1fr auto; }
+      .main-nav { display: none; }
+      .search-input { width: clamp(105px,32vw,150px); }
+      .search-input::placeholder { color: transparent; }
+      .hero { min-height: 430px; padding: 48px 20px; align-items: start; }
+      .hero::before { width: 300px; height: 300px; right: -80px; top: 145px; }
+      .hero::after { width: 235px; height: 235px; right: -48px; top: 177px; }
+      .hero-copy { max-width: 370px; position: relative; z-index: 2; }
+      .hero h1 { max-width: 340px; font-size: clamp(43px,12vw,60px); }
+      .hero-copy > p { max-width: 280px; font-size: 11px; }
+      .hero-bottle { top: auto; right: 9%; bottom: -80px; transform: scale(.66) rotate(4deg); transform-origin: bottom right; opacity: .83; }
+      .benefits-inner { padding: 16px 12px; grid-template-columns: 1fr; gap: 12px; }
+      .benefit { justify-content: flex-start; padding-left: 18%; font-size: 9px; }
+      .section { padding: 52px 15px; }
+      .section-heading { display: block; }
+      .section-heading h2 { font-size: 30px; }
+      .section-heading p { margin-top: 7px; }
+      .product-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+      .product-art { height: clamp(155px,53vw,210px); }
+      .product-art .bottle { transform: scale(.64); }
+      .product-info { padding: 12px 10px 11px; }
+      .product-name { font-size: 15px; }
+      .product-desc { font-size: 8px; }
+      .product-price { font-size: 11px; }
+      .add-button { padding: 0 7px; font-size: 8px; }
+      .story-inner { padding: 43px 15px; grid-template-columns: 1fr; gap: 25px; }
+      .story-art { min-height: 185px; }
+      .story-copy h2 { font-size: 30px; }
+      .newsletter { padding: 44px 15px; display: block; }
+      .newsletter-form { margin-top: 17px; }
+      .footer-inner { padding: 32px 17px 20px; grid-template-columns: 1fr 1fr; gap: 20px; }
+      .footer-inner > :first-child { grid-column: 1/-1; }
+      .footer-bottom { padding: 13px 17px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement"><strong>FRETE GRÁTIS</strong> em pedidos acima de R$ 299 · Um carinho especial em cada detalhe</div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#" aria-label="Essência Atelier, início">
+        <span class="brand-mark">EA</span>
+        <span class="brand-name">Essência Atelier<small>perfumes & descobertas</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="#colecao">Coleção</a><a href="#colecao" data-nav-category="feminino">Femininos</a><a href="#colecao" data-nav-category="masculino">Masculinos</a><a href="#colecao" data-nav-category="unissex">Unissex</a><a href="#historia">Nossa essência</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-wrap"><span class="search-icon">⌕</span><input class="search-input" id="search" type="search" aria-label="Buscar perfumes" placeholder="Buscar fragrância..."></div>
+        <button class="cart-button" id="open-cart" type="button" aria-label="Abrir carrinho">♧<span class="cart-count" id="cart-count">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow">Sua assinatura, em forma de perfume</div>
+          <h1>Há aromas<br>que contam <em>histórias.</em></h1>
+          <p>Fragrâncias escolhidas para acompanhar quem você é — e tudo o que ainda vai se tornar.</p>
+          <a class="button-main" href="#colecao">ENCONTRE SUA FRAGRÂNCIA <span>→</span></a>
+          <div class="hero-note"><span>✧</span> Curadoria especial · Novas descobertas toda semana</div>
+        </div>
+        <div class="hero-bottle" aria-hidden="true"><div class="bottle"><div class="bottle-label">ESSÊNCIA<small>ATELIER · Nº 01</small></div></div></div>
+      </div>
+    </section>
+
+    <section class="benefits" aria-label="Vantagens">
+      <div class="benefits-inner">
+        <div class="benefit"><span class="benefit-icon">✧</span><span>Fragrâncias para todos os momentos</span></div>
+        <div class="benefit"><span class="benefit-icon">♡</span><span>Atendimento próximo e personalizado</span></div>
+        <div class="benefit"><span class="benefit-icon">♧</span><span>Embalagem feita para presentear</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="colecao">
+      <div class="section-heading">
+        <div><div class="eyebrow">Encontre o seu próximo favorito</div><h2>A nossa coleção</h2></div>
+        <p id="product-count">Fragrâncias escolhidas a dedo</p>
+      </div>
+      <div class="category-list" id="category-list" aria-label="Categorias de perfumes"></div>
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <section class="story" id="historia">
+      <div class="story-inner">
+        <div class="story-art" aria-hidden="true"><div class="bottle"><div class="bottle-label">FEITO COM<small>CARINHO · PARA VOCÊ</small></div></div></div>
+        <div class="story-copy">
+          <div class="eyebrow">Mais do que um perfume</div>
+          <h2>Uma fragrância.<br>Uma lembrança.<br><em>Uma parte de você.</em></h2>
+          <p>Acreditamos que o perfume certo tem o poder de transformar um instante em memória. Nossa seleção reúne aromas para presentear, celebrar e acompanhar cada capítulo da sua história.</p>
+          <a class="button-outline" href="#colecao">EXPLORE A COLEÇÃO <span>→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <div><div class="eyebrow">Um mimo perfumado na sua caixa de entrada</div><h2>Novidades & notas especiais</h2><p>Cadastre seu e-mail para receber novidades da nossa curadoria.</p></div>
+      <form class="newsletter-form" id="newsletter-form"><input type="email" id="newsletter-email" placeholder="Seu melhor e-mail" aria-label="Seu e-mail" required><button type="submit">QUERO RECEBER</button></form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <a class="brand" href="#"><span class="brand-mark">EA</span><span class="brand-name">Essência Atelier<small>perfumes & descobertas</small></span></a>
+        <p class="footer-note">Fragrâncias escolhidas com intenção. Para os dias comuns, os grandes momentos e tudo o que merece ser lembrado.</p>
+      </div>
+      <div class="footer-col"><h3>Explore</h3><a href="#colecao" data-nav-category="feminino">Perfumes femininos</a><a href="#colecao" data-nav-category="masculino">Perfumes masculinos</a><a href="#colecao" data-nav-category="unissex">Fragrâncias unissex</a><a href="#colecao" data-nav-category="kits">Kits para presentear</a></div>
+      <div class="footer-col"><h3>Atendimento</h3><p>Segunda a sábado, das 9h às 18h</p><a href="#colecao">Como comprar</a><a href="#colecao">Entrega e trocas</a><a href="#colecao">Fale com a gente</a></div>
+    </div>
+    <div class="footer-bottom">© <span id="year"></span> Essência Atelier · Feito com carinho para quem ama perfume.</div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Carrinho de compras" aria-hidden="true">
+    <div class="cart-head"><h2>Sua sacola</h2><button class="close-button" id="close-cart" type="button" aria-label="Fechar carrinho">×</button></div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-foot"><div class="cart-total"><span>Subtotal</span><span id="cart-total">R$ 0,00</span></div><button class="button-main" id="checkout-button" type="button">FINALIZAR PELO WHATSAPP →</button><p class="cart-hint">Frete e forma de pagamento combinados diretamente com a loja.</p></div>
+  </aside>
+
+  <dialog id="checkout-dialog">
+    <form class="checkout-inner" id="checkout-form">
+      <div class="checkout-head"><div><h2>Quase seu!</h2><p>Conte como podemos preparar seu pedido.</p></div><button class="close-button" type="button" data-close aria-label="Fechar">×</button></div>
+      <div class="field"><label for="customer-name">Seu nome</label><input id="customer-name" autocomplete="name" required placeholder="Como podemos chamar você?"></div>
+      <div class="field"><label for="customer-phone">Seu WhatsApp</label><input id="customer-phone" type="tel" autocomplete="tel" required placeholder="(00) 00000-0000"></div>
+      <div class="field"><label for="customer-note">Observação (opcional)</label><textarea id="customer-note" placeholder="Presente? Deixe um recadinho ou conte sua preferência."></textarea></div>
+      <div class="checkout-total"><span>Total dos produtos</span><span id="checkout-total">R$ 0,00</span></div>
+      <button class="button-main checkout-submit" type="submit">ENVIAR PEDIDO PELO WHATSAPP →</button>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      // Troque pelo WhatsApp da loja com código do país, DDD e número, somente dígitos.
+      const STORE_WHATSAPP = "";
+      const CART_KEY = "essenciaAtelier.cart.v1";
+      const categories = [
+        { id: "todos", label: "Todos os perfumes" },
+        { id: "feminino", label: "Femininos" },
+        { id: "masculino", label: "Masculinos" },
+        { id: "unissex", label: "Unissex" },
+        { id: "kits", label: "Kits & presentes" }
+      ];
+      const products = [
+        { id: "aurora", name: "Aurora", category: "feminino", price: 189.9, size: "100 ml", tag: "Favorito", description: "Floral luminoso com notas de jasmim e baunilha.", hue: "#ead5ce" },
+        { id: "veludo", name: "Veludo Rosé", category: "feminino", price: 219.9, size: "90 ml", tag: "Novo", description: "Rosas delicadas, peônia e um toque de âmbar.", hue: "#ead9d7" },
+        { id: "noir", name: "Noir Intenso", category: "masculino", price: 229.9, size: "100 ml", tag: "Clássico", description: "Madeiras nobres, especiarias e presença marcante.", hue: "#d8d4cc" },
+        { id: "cedro", name: "Cedro & Mar", category: "masculino", price: 199.9, size: "100 ml", tag: "", description: "Acordes frescos de bergamota, cedro e vetiver.", hue: "#d8e0d9" },
+        { id: "essencial", name: "Essencial Nº 01", category: "unissex", price: 249.9, size: "75 ml", tag: "Exclusivo", description: "Almíscar suave, chá branco e madeiras limpas.", hue: "#e8dfd0" },
+        { id: "domingo", name: "Domingo Solar", category: "unissex", price: 179.9, size: "100 ml", tag: "", description: "Cítricos vibrantes e flores para dias leves.", hue: "#eee4cb" },
+        { id: "duo", name: "Duo Memórias", category: "kits", price: 329.9, size: "2 × 50 ml", tag: "Presente", description: "Um par de fragrâncias para compartilhar momentos.", hue: "#e1d7d4" },
+        { id: "miniaturas", name: "Descobertas", category: "kits", price: 149.9, size: "4 × 10 ml", tag: "Para descobrir", description: "Quatro pequenas fragrâncias para levar com você.", hue: "#e8ddca" }
+      ];
+      const categoryNames = Object.fromEntries(categories.map((category) => [category.id, category.label]));
+      const $ = (id) => document.getElementById(id);
+      const currency = (value) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
+      let activeCategory = "todos";
+      let query = "";
+      let cart = loadCart();
+      let toastTimer;
+
+      function loadCart() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+          if (!Array.isArray(saved)) throw new Error("Formato do carrinho inválido.");
+          return saved.filter((item) =>
+            item && products.some((product) => product.id === item.id) &&
+            Number.isInteger(item.quantity) && item.quantity > 0
+          );
+        } catch (error) {
+          console.error("Não foi possível carregar o carrinho salvo.", error);
+          return [];
+        }
+      }
+
+      function saveCart() {
+        try {
+          localStorage.setItem(CART_KEY, JSON.stringify(cart));
+          return true;
+        } catch (error) {
+          console.error("Não foi possível salvar o carrinho.", error);
+          showToast("Não foi possível salvar seu carrinho neste navegador.");
+          return false;
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, (character) => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        })[character]);
+      }
+
+      function bottleMarkup() {
+        return '<div class="bottle" aria-hidden="true"><div class="bottle-label">EA<small>EAU DE PARFUM</small></div></div>';
+      }
+
+      function renderCategories() {
+        $("category-list").innerHTML = categories.map((category) =>
+          `<button class="category-button${activeCategory === category.id ? " active" : ""}" type="button" data-category="${category.id}" aria-pressed="${activeCategory === category.id}">${category.label}</button>`
+        ).join("");
+      }
+
+      function renderProducts() {
+        const normalized = query.toLocaleLowerCase("pt-BR");
+        const filtered = products.filter((product) =>
+          (activeCategory === "todos" || product.category === activeCategory) &&
+          `${product.name} ${product.description} ${categoryNames[product.category]}`.toLocaleLowerCase("pt-BR").includes(normalized)
+        );
+        $("product-count").textContent = `${filtered.length} ${filtered.length === 1 ? "fragrância selecionada" : "fragrâncias selecionadas"}`;
+        $("product-grid").innerHTML = filtered.length ? filtered.map((product) => `
+          <article class="product-card">
+            <div class="product-art" style="--art-bg:${product.hue}">
+              ${product.tag ? `<span class="product-tag">${escapeHtml(product.tag)}</span>` : ""}
+              <button class="favorite" type="button" data-favorite="${product.id}" aria-label="Favoritar ${escapeHtml(product.name)}" aria-pressed="false">♡</button>
+              ${bottleMarkup()}
+            </div>
+            <div class="product-info">
+              <div class="product-category">${escapeHtml(categoryNames[product.category])}</div>
+              <h3 class="product-name">${escapeHtml(product.name)}</h3>
+              <p class="product-desc">${escapeHtml(product.description)}</p>
+              <div class="product-bottom">
+                <div class="product-price">${currency(product.price)}<span class="product-size">${escapeHtml(product.size)}</span></div>
+                <button class="add-button" type="button" data-add="${product.id}">ADICIONAR +</button>
+              </div>
+            </div>
+          </article>`).join("") : `<div class="no-results">Não encontramos essa fragrância. Experimente outra busca ou categoria.</div>`;
+      }
+
+      function cartDetails() {
+        return cart.map((item) => ({
+          ...item,
+          product: products.find((product) => product.id === item.id)
+        })).filter((item) => item.product);
+      }
+
+      function cartTotal() {
+        return cartDetails().reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+      }
+
+      function renderCart() {
+        const items = cartDetails();
+        $("cart-count").textContent = items.reduce((sum, item) => sum + item.quantity, 0);
+        $("cart-total").textContent = currency(cartTotal());
+        $("checkout-total").textContent = currency(cartTotal());
+        $("cart-items").innerHTML = items.length ? items.map((item) => `
+          <div class="cart-item">
+            <div class="cart-art">${bottleMarkup()}</div>
+            <div>
+              <h3 class="cart-item-name">${escapeHtml(item.product.name)}</h3>
+              <div class="cart-item-price">${currency(item.product.price)} · ${escapeHtml(item.product.size)}</div>
+              <div class="quantity-control" aria-label="Quantidade">
+                <button type="button" data-quantity="${item.id}" data-change="-1" aria-label="Diminuir quantidade">−</button>
+                <span>${item.quantity}</span>
+                <button type="button" data-quantity="${item.id}" data-change="1" aria-label="Aumentar quantidade">+</button>
+              </div>
+            </div>
+            <button class="remove-item" type="button" data-remove="${item.id}" aria-label="Remover ${escapeHtml(item.product.name)}">×</button>
+          </div>`).join("") : `<div class="cart-empty">Sua sacola ainda está vazia.<br>Encontre uma fragrância para chamar de sua.</div>`;
+        $("checkout-button").disabled = items.length === 0;
+        $("checkout-button").style.opacity = items.length ? "1" : ".5";
+      }
+
+      function setCartOpen(open) {
+        $("cart-drawer").classList.toggle("open", open);
+        $("overlay").classList.toggle("open", open);
+        $("cart-drawer").setAttribute("aria-hidden", String(!open));
+        document.body.style.overflow = open ? "hidden" : "";
+        if (open) $("close-cart").focus();
+      }
+
+      function showToast(message) {
+        $("toast").textContent = message;
+        $("toast").classList.add("visible");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => $("toast").classList.remove("visible"), 3200);
+      }
+
+      function addToCart(id) {
+        const item = cart.find((entry) => entry.id === id);
+        if (item) item.quantity += 1;
+        else cart.push({ id, quantity: 1 });
+        if (saveCart()) {
+          renderCart();
+          showToast("Adicionado à sua sacola.");
+        }
+      }
+
+      function updateQuantity(id, change) {
+        const item = cart.find((entry) => entry.id === id);
+        if (!item) return;
+        item.quantity += change;
+        if (item.quantity <= 0) cart = cart.filter((entry) => entry.id !== id);
+        if (saveCart()) renderCart();
+      }
+
+      $("year").textContent = new Date().getFullYear();
+      renderCategories();
+      renderProducts();
+      renderCart();
+
+      $("category-list").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-category]");
+        if (!button) return;
+        activeCategory = button.dataset.category;
+        renderCategories();
+        renderProducts();
+      });
+      document.querySelectorAll("[data-nav-category]").forEach((link) => link.addEventListener("click", () => {
+        activeCategory = link.dataset.navCategory;
+        renderCategories();
+        renderProducts();
+      }));
+      $("search").addEventListener("input", () => {
+        query = $("search").value.trim();
+        renderProducts();
+      });
+      $("product-grid").addEventListener("click", (event) => {
+        const addButton = event.target.closest("[data-add]");
+        const favoriteButton = event.target.closest("[data-favorite]");
+        if (addButton) addToCart(addButton.dataset.add);
+        if (favoriteButton) {
+          const active = favoriteButton.classList.toggle("active");
+          favoriteButton.textContent = active ? "♥" : "♡";
+          favoriteButton.setAttribute("aria-pressed", String(active));
+          showToast(active ? "Fragrância adicionada aos favoritos." : "Fragrância removida dos favoritos.");
+        }
+      });
+      $("cart-items").addEventListener("click", (event) => {
+        const quantityButton = event.target.closest("[data-quantity]");
+        const removeButton = event.target.closest("[data-remove]");
+        if (quantityButton) updateQuantity(quantityButton.dataset.quantity, Number(quantityButton.dataset.change));
+        if (removeButton) {
+          cart = cart.filter((item) => item.id !== removeButton.dataset.remove);
+          if (saveCart()) renderCart();
+        }
+      });
+      $("open-cart").addEventListener("click", () => setCartOpen(true));
+      $("close-cart").addEventListener("click", () => setCartOpen(false));
+      $("overlay").addEventListener("click", () => setCartOpen(false));
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setCartOpen(false);
+      });
+      $("checkout-button").addEventListener("click", () => {
+        if (!cart.length) return;
+        $("checkout-dialog").showModal();
+      });
+      $("checkout-dialog").addEventListener("click", (event) => {
+        if (event.target === $("checkout-dialog")) $("checkout-dialog").close();
+      });
+      $("checkout-dialog").querySelector("[data-close]").addEventListener("click", () => $("checkout-dialog").close());
+      $("checkout-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!STORE_WHATSAPP) {
+          showToast("A loja ainda precisa configurar o WhatsApp. Edite STORE_WHATSAPP no código do site.");
+          return;
+        }
+        const name = $("customer-name").value.trim();
+        const phone = $("customer-phone").value.trim();
+        const note = $("customer-note").value.trim();
+        const lines = [
+          "Olá! Quero fazer um pedido na Essência Atelier.",
+          "",
+          `Nome: ${name}`,
+          `Meu WhatsApp: ${phone}`,
+          "",
+          "Meu pedido:",
+          ...cartDetails().map((item) => `• ${item.product.name} (${item.product.size}) × ${item.quantity} — ${currency(item.product.price * item.quantity)}`),
+          "",
+          `Total dos produtos: ${currency(cartTotal())}`,
+          "Frete e pagamento: a combinar."
+        ];
+        if (note) lines.push("", `Observação: ${note}`);
+        const destination = `https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`;
+        window.open(destination, "_blank", "noopener,noreferrer");
+      });
+      $("newsletter-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const email = $("newsletter-email").value.trim();
+        if (email) {
+          showToast("Obrigada pelo interesse! A loja entrará em contato em breve.");
+          $("newsletter-form").reset();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
